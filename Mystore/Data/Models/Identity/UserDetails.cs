@@ -23,6 +23,7 @@ namespace Mystore.Api.Data.Models.Identity
         public void MappingProfile(Profile mapper)
         {
             mapper.CreateMap<UserDetailsInputModel, UserDetails>();
+            mapper.CreateMap<UserDetails, UserDetailsOutputModel>();
         }
     }
 
@@ -32,5 +33,15 @@ namespace Mystore.Api.Data.Models.Identity
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public long CityId { get; set; }
+    }
+
+    public class UserDetailsOutputModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+        public City City { get; set; }
+        public IList<Mystore.Api.Data.Models.Project.Project> Projects { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -95,7 +95,8 @@ namespace Mystore.Api.Controllers
             {
                 return BadRequest();
             }
-            return Ok(result);
+            var output = mapper.Map<UserDetailsOutputModel>(result);
+            return Ok(output);
         }
     }
 }
