@@ -39,7 +39,11 @@ namespace Mystore.Api.Controllers
         [Route(nameof(SaveCity))]
         public async Task<ActionResult> SaveCity(CityInputModel city)
         {
-            await cityRepository.SaveAsync(new City { Name = city.Name });
+            var result = await cityRepository.SaveAsync(new City { Name = city.Name });
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
             return Ok($"{city.Name} saved successfully.");
         }
 
@@ -59,7 +63,11 @@ namespace Mystore.Api.Controllers
         [Route(nameof(SaveUnit))]
         public async Task<ActionResult> SaveUnit(UnitOfMeasurementInputModel unit)
         {
-            await unitOfMeasurementRepository.SaveAsync(new UnitOfMeasurement { Description = unit.Description });
+            var result = await unitOfMeasurementRepository.SaveAsync(new UnitOfMeasurement { Description = unit.Description });
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
             return Ok($"{unit.Description} saved successfully.");
         }
     }
