@@ -24,7 +24,6 @@ namespace Mystore.Api.Controllers
             this.unitOfMeasurementRepository = unitOfMeasurementRepository;
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]        
         [Route(nameof(GetCities))]        
         public async Task<ActionResult<IList<City>>> GetCities()
@@ -62,6 +61,7 @@ namespace Mystore.Api.Controllers
             return Ok(units);
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         [Route(nameof(SaveUnit))]
         public async Task<ActionResult> SaveUnit(UnitOfMeasurementInputModel unit)

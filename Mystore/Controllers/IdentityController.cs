@@ -59,7 +59,7 @@ namespace Mystore.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Route(nameof(ChangePassword))]
         public async Task<ActionResult> ChangePassword(ChangePasswordInputModel input)
             => await this.identity.ChangePassword(this.currentUser.UserId, new ChangePasswordInputModel

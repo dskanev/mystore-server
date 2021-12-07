@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Common.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]")]    
     public abstract class ApiController : ControllerBase
     {
         public const string PathSeparator = "/";
