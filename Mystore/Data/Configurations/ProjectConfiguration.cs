@@ -17,7 +17,7 @@ namespace Mystore.Api.Data.Configurations
 
             builder
                 .HasOne(x => x.Author)
-                .WithMany(x => x.Projects)
+                .WithMany()
                 .HasForeignKey(x => x.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
 

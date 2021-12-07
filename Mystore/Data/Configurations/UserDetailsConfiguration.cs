@@ -14,11 +14,6 @@ namespace Mystore.Api.Data.Configurations
         {
             builder
                 .HasKey(m => m.Id);
-
-            builder
-                .HasMany(x => x.Projects)
-                .WithOne(x => x.Author)
-                .HasForeignKey(x => x.AuthorId);
         }
     }
 }

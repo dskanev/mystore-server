@@ -43,7 +43,6 @@ namespace Mystore.Api.Repositories.Identity
             .All()
             .Where(x => x.UserId == userId)
             .Include(x => x.City)
-            .Include(x => x.Projects)
             .FirstOrDefaultAsync();
     }
 }
