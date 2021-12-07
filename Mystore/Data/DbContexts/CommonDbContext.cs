@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/*
+using Microsoft.EntityFrameworkCore;
 using Mystore.Api.Data.Models.Identity;
 using Mystore.Api.Data.Models.Nomenclature;
 using Mystore.Api.Data.Models.Project;
@@ -30,3 +31,4 @@ namespace Mystore.Api.Data.DbContexts
         }
     }
 }
+*/

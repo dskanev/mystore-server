@@ -1,4 +1,5 @@
 ﻿using Common.Data.Models;
+using Mystore.Api.Data.Models.Identity;
 using Mystore.Api.Data.Models.Nomenclature;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace Mystore.Api.Data.Models.Project
         public string Name { get; set; }
         public string Description { get; set; }
         public UnitOfMeasurement UnitOfMeasurement { get; set; }
+        public long UnitOfMeasurementId { get; set; }
         public City City { get; set; }
+        public long CityId { get; set; }
         public int Measurement { get; set; }
-        public string[] ImageUrls { get; set; }
+        public IList<ImageMapping> Images { get; set; }
         public DateTime? Deadline { get; set; }
-        public User Author { get; set; }
+        public UserDetails Author { get; set; }
+        public long AuthorId { get; set; }
     }
 }

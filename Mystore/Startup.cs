@@ -16,6 +16,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Mystore.Api.Data.Seeders;
+using Mystore.Api.Repositories.Identity;
+using Mystore.Api.Repositories.Nomenclature;
+using Mystore.Api.Repositories.Project;
 
 namespace Mystore
 {
@@ -31,9 +35,14 @@ namespace Mystore
                .AddWebService<IdentityDbContext>(this.Configuration)
                .AddUserStorage()
                .AddTransient<IDataSeeder, IdentityDataSeeder>()
+               .AddTransient<IDataSeeder, NomenclaturesDataSeeder>()
                .AddTransient<IIdentityService, IdentityService>()
                .AddTransient<ITokenGeneratorService, TokenGeneratorService>()
                .AddTransient<IUserRepository, UserRepository>()
+               .AddTransient<IUserDetailsRepository, UserDetailsRepository>()
+               .AddTransient<ICityRepository, CityRepository>()
+               .AddTransient<IUnitOfMeasurementRepository, UnitOfMeasurementRepository>()
+               .AddTransient<IProjectRepository, ProjectRepository>()
                .AddSwagger();
 
             services.AddControllers();

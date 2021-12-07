@@ -31,8 +31,7 @@ namespace Mystore.Api.Services
             var user = new User
             {
                 Email = userInput.Email,
-                UserName = userInput.Email,
-                Balance = 0
+                UserName = userInput.Email
             };
 
             var identityResult = await this.userManager.CreateAsync(user, userInput.Password);
