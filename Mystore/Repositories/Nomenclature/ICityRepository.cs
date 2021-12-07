@@ -10,7 +10,7 @@ namespace Mystore.Api.Repositories.Nomenclature
     public interface ICityRepository : IDataService<City>
     {
         public IQueryable<City> GetAll();
-        Task<Result> SaveAsync(City city);
+        Task<Result<City>> SaveAsync(City city);
         Task<City> GetById(long id);
     }
 }

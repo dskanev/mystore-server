@@ -21,23 +21,23 @@ namespace Mystore.Api.Repositories.Nomenclature
         public IQueryable<City> GetAll()
             => this.All();
 
-        public async Task<Result> SaveAsync(City city)
+        public async Task<Result<City>> SaveAsync(City city)
         {
             try
             {
                 if (city.Name == null || city.Name == "")
                 {
-                    return Result.Failure("City name is required.");
+                    return Result<City>.Failure("City name is required.");
                 }
 
                 await this.Data.AddAsync(city);
                 await this.Data.SaveChangesAsync();
 
-                return Result.Success;
+                return Result<City>.SuccessWith(city);
             }
             catch(Exception e)
             {
-                return Result.Failure(e.Message);
+                return Result<City>.Failure(e.Message);
             }
         }
 

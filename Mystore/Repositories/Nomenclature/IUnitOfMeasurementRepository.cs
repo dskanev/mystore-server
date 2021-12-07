@@ -10,6 +10,6 @@ namespace Mystore.Api.Repositories.Nomenclature
     public interface IUnitOfMeasurementRepository : IDataService<UnitOfMeasurement>
     {
         IQueryable<UnitOfMeasurement> GetAll();
-        Task<Result> SaveAsync(UnitOfMeasurement unit);
+        Task<Result<UnitOfMeasurement>> SaveAsync(UnitOfMeasurement unit);
     }
 }

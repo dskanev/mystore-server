@@ -20,23 +20,23 @@ namespace Mystore.Api.Repositories.Nomenclature
         public IQueryable<UnitOfMeasurement> GetAll()
             => this.All();
 
-        public async Task<Result> SaveAsync(UnitOfMeasurement unit)
+        public async Task<Result<UnitOfMeasurement>> SaveAsync(UnitOfMeasurement unit)
         {
             try
             {
                 if (unit.Description == null || unit.Description == "")
                 {
-                    return Result.Failure("Unit description is required.");
+                    return Result<UnitOfMeasurement>.Failure("Unit description is required.");
                 }
 
                 await this.Data.AddAsync(unit);
                 await this.Data.SaveChangesAsync();
 
-                return Result.Success;
+                return Result<UnitOfMeasurement>.SuccessWith(unit);
             }
             catch(Exception e)
             {
-                return Result.Failure(e.Message);
+                return Result<UnitOfMeasurement>.Failure(e.Message);
             }            
         }
     }

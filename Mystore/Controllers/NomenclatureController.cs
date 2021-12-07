@@ -44,7 +44,7 @@ namespace Mystore.Api.Controllers
             {
                 return BadRequest(result.Errors);
             }
-            return Ok($"{city.Name} saved successfully.");
+            return Ok(result.Data);
         }
 
         [HttpGet]
@@ -68,7 +68,7 @@ namespace Mystore.Api.Controllers
             {
                 return BadRequest(result.Errors);
             }
-            return Ok($"{unit.Description} saved successfully.");
+            return Ok(result.Data);
         }
     }
 }

@@ -73,6 +73,9 @@
         public new static Result<TData> Failure(IEnumerable<string> errors)
             => new Result<TData>(false, default!, errors.ToList());
 
+        public static Result<TData> Failure(string error)
+            => new Result<TData>(false, default!, new List<string> { error });
+
         public static implicit operator Result<TData>(string error)
             => Failure(new List<string> { error });
 
