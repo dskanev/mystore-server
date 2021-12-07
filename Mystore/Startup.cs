@@ -21,6 +21,7 @@ using Mystore.Api.Repositories.Identity;
 using Mystore.Api.Repositories.Nomenclature;
 using Mystore.Api.Repositories.Project;
 using Common.Services.Identity;
+using System.Text.Json.Serialization;
 
 namespace Mystore
 {
@@ -46,7 +47,12 @@ namespace Mystore
                .AddTransient<IProjectRepository, ProjectRepository>()
                .AddSwagger();
 
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
