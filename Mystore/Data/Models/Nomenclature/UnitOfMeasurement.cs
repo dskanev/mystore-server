@@ -10,4 +10,9 @@ namespace Mystore.Api.Data.Models.Nomenclature
     {
         public string Description { get; set; }
     }
+
+    public class UnitOfMeasurementInputModel
+    {
+        public string Description { get; set; }
+    }
 }

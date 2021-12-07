@@ -34,5 +34,33 @@ namespace Mystore.Api.Controllers
             }
             return Ok(cities);
         }
+
+        [HttpPost]
+        [Route(nameof(SaveCity))]
+        public async Task<ActionResult> SaveCity(CityInputModel city)
+        {
+            await cityRepository.SaveAsync(new City { Name = city.Name });
+            return Ok($"{city.Name} saved successfully.");
+        }
+
+        [HttpGet]
+        [Route(nameof(GetUnits))]
+        public async Task<ActionResult<IList<UnitOfMeasurement>>> GetUnits()
+        {
+            var units = await unitOfMeasurementRepository.GetAll().ToListAsync();
+            if (!units.Any())
+            {
+                return BadRequest("No units of measurement found in database.");
+            }
+            return Ok(units);
+        }
+
+        [HttpPost]
+        [Route(nameof(SaveUnit))]
+        public async Task<ActionResult> SaveUnit(UnitOfMeasurementInputModel unit)
+        {
+            await unitOfMeasurementRepository.SaveAsync(new UnitOfMeasurement { Description = unit.Description });
+            return Ok($"{unit.Description} saved successfully.");
+        }
     }
 }

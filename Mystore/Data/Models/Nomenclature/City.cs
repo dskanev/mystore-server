@@ -10,4 +10,9 @@ namespace Mystore.Api.Data.Models.Nomenclature
     {
         public string Name { get; set; }
     }
+
+    public class CityInputModel
+    {
+        public string Name { get; set; }
+    }
 }
