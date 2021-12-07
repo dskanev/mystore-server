@@ -10,7 +10,6 @@ namespace Mystore.Api.Services
     public class IdentityService : IIdentityService
     {
         private const string InvalidErrorMessage = "Invalid credentials.";
-        private const string InsufficientBalanceMessage = "Insufficient balance.";
 
         private readonly UserManager<User> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;

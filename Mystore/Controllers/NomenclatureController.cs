@@ -1,4 +1,5 @@
 ﻿using Common.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mystore.Api.Data.Models.Nomenclature;
@@ -23,8 +24,9 @@ namespace Mystore.Api.Controllers
             this.unitOfMeasurementRepository = unitOfMeasurementRepository;
         }
 
-        [HttpGet]
-        [Route(nameof(GetCities))]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]        
+        [Route(nameof(GetCities))]        
         public async Task<ActionResult<IList<City>>> GetCities()
         {
             var cities = await cityRepository.GetAll().ToListAsync();
@@ -35,6 +37,7 @@ namespace Mystore.Api.Controllers
             return Ok(cities);
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         [Route(nameof(SaveCity))]
         public async Task<ActionResult> SaveCity(CityInputModel city)

@@ -20,6 +20,7 @@ using Mystore.Api.Data.Seeders;
 using Mystore.Api.Repositories.Identity;
 using Mystore.Api.Repositories.Nomenclature;
 using Mystore.Api.Repositories.Project;
+using Common.Services.Identity;
 
 namespace Mystore
 {

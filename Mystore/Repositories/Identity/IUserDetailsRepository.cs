@@ -9,5 +9,7 @@ namespace Mystore.Api.Repositories.Identity
 {
     public interface IUserDetailsRepository : IDataService<UserDetails>
     {
+        Task<Result<UserDetails>> SaveUserDetails(UserDetails userDetails);
+        Task<UserDetails> GetByUserId(string userId);
     }
 }

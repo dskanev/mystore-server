@@ -25,7 +25,7 @@
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod())
-                .UseAuthentication()
+                .UseJwtHeaderAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints => endpoints
                     .MapControllers());

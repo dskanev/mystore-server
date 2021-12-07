@@ -31,6 +31,8 @@
                 .AddApplicationSettings(configuration)
                 .AddTokenAuthentication(configuration)
                 .AddAutoMapperProfile(Assembly.GetCallingAssembly())
+                .AddScoped<ICurrentTokenService, CurrentTokenService>()
+                .AddTransient<JwtHeaderAuthenticationMiddleware>()
                 .AddControllers();
 
             return services;

@@ -20,6 +20,9 @@ namespace Mystore.Api.Data.Configurations
                 .WithMany(x => x.Projects)
                 .HasForeignKey(x => x.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(x => x.City);
         }
     }
 }

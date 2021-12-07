@@ -5,6 +5,9 @@ using Mystore.Api.Models;
 using Mystore.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Mystore.Api.Data.Models.Identity;
+using Mystore.Api.Repositories.Identity;
+using AutoMapper;
 
 namespace Mystore.Api.Controllers
 {
@@ -12,13 +15,19 @@ namespace Mystore.Api.Controllers
     {
         private readonly IIdentityService identity;
         private readonly ICurrentUserService currentUser;
+        private readonly IUserDetailsRepository userDetailsRepository;
+        private readonly IMapper mapper;
 
         public IdentityController(
             IIdentityService identity,
-            ICurrentUserService currentUser)
+            ICurrentUserService currentUser,
+            IUserDetailsRepository userDetailsRepository,
+            IMapper mapper)
         {
             this.identity = identity;
             this.currentUser = currentUser;
+            this.userDetailsRepository = userDetailsRepository;
+            this.mapper = mapper;
         }
 
         [HttpPost]
@@ -58,5 +67,35 @@ namespace Mystore.Api.Controllers
                 CurrentPassword = input.CurrentPassword,
                 NewPassword = input.NewPassword
             });
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPost]
+        [Route(nameof(SaveUserDetails))]
+        public async Task<ActionResult> SaveUserDetails(UserDetailsInputModel userDetails)
+        {
+            var dbModel = mapper.Map<UserDetails>(userDetails);
+            dbModel.UserId = currentUser.UserId;
+
+            var result = await userDetailsRepository.SaveUserDetails(dbModel);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok(result.Data);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]
+        [Route(nameof(GetCurrentUserDetails))]
+        public async Task<ActionResult> GetCurrentUserDetails()
+        {
+            var result = await userDetailsRepository.GetByUserId(currentUser.UserId);
+            if (result == default)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
     }
 }
