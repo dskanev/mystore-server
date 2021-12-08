@@ -45,6 +45,7 @@ namespace Mystore
                .AddTransient<ICityRepository, CityRepository>()
                .AddTransient<IUnitOfMeasurementRepository, UnitOfMeasurementRepository>()
                .AddTransient<IProjectRepository, ProjectRepository>()
+               .AddTransient<IImageRepository, ImageRepository>()
                .AddSwagger();
 
             services

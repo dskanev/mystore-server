@@ -3,6 +3,7 @@ using Common.Controllers;
 using Common.Services.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Mystore.Api.Data.Models.Nomenclature;
 using Mystore.Api.Data.Models.Project;
 using Mystore.Api.Repositories.Identity;
 using Mystore.Api.Repositories.Project;
@@ -19,17 +20,20 @@ namespace Mystore.Api.Controllers
         private readonly ICurrentUserService currentUser;
         private readonly IUserDetailsRepository userDetailsRepository;
         private readonly IProjectRepository projectRepository;
+        private readonly IImageRepository imageRepository;
         private readonly IMapper mapper;
 
         public ProjectController(
             ICurrentUserService currentUser,
             IUserDetailsRepository userDetailsRepository,
             IProjectRepository projectRepository,
+            IImageRepository imageRepository,
             IMapper mapper)
         {
             this.currentUser = currentUser;
             this.userDetailsRepository = userDetailsRepository;
             this.projectRepository = projectRepository;
+            this.imageRepository = imageRepository;
             this.mapper = mapper;
         }
 
@@ -80,6 +84,45 @@ namespace Mystore.Api.Controllers
             input.AuthorId = await userDetailsRepository.GetDetailsIdForUser(currentUser.UserId);
             var result = await projectRepository.Create(input);
             if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(GetImageById))]
+        public async Task<ActionResult> GetImageById(long id)
+        {
+            var result = await imageRepository.GetById(id);
+            if (result == default)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(GetImagesForProject))]
+        public async Task<ActionResult> GetImagesForProject(long id)
+        {
+            var result = await imageRepository.GetAllForProject(id);
+            if (result == default)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(SaveProjectImage))]
+        public async Task<ActionResult> SaveProjectImage(ImageInputModel input)
+        {
+            var result = await imageRepository.CreateImage(input);
+            if (result == default)
             {
                 return BadRequest();
             }
