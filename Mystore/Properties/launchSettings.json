@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Identity": {
+    "Mystore": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
