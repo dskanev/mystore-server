@@ -11,5 +11,6 @@ namespace Mystore.Api.Repositories.Identity
     {
         Task<Result<UserDetails>> SaveUserDetails(UserDetails userDetails);
         Task<UserDetails> GetByUserId(string userId);
+        Task<long> GetDetailsIdForUser(string userId);
     }
 }

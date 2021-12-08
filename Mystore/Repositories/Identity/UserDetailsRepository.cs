@@ -44,5 +44,12 @@ namespace Mystore.Api.Repositories.Identity
             .Where(x => x.UserId == userId)
             .Include(x => x.City)
             .FirstOrDefaultAsync();
+
+        public async Task<long> GetDetailsIdForUser(string userId)
+        => await this
+            .All()
+            .Where(x => x.UserId == userId)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
     }
 }

@@ -48,11 +48,12 @@ namespace Mystore
                .AddSwagger();
 
             services
-                .AddControllers()
+                .AddControllers();
+                /*
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                });
+                });*/
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

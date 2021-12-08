@@ -59,7 +59,7 @@
             return app
                 .UseSwagger()
                 .UseSwaggerUI(c =>
-                {
+                {                    
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", Assembly.GetEntryAssembly().GetName().Name);
                 });
         }
