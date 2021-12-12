@@ -15,7 +15,7 @@ namespace Mystore.Api.Data.Models.Identity
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public City City { get; set; }
-        public long CityId { get; set; }
+        public long? CityId { get; set; }
         public User User { get; set; }
         public string UserId { get; set; }
 

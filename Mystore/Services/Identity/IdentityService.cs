@@ -4,6 +4,8 @@ using Mystore.Api.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
+using Mystore.Api.Data.Models.Identity;
+using Common.Extensions;
 
 namespace Mystore.Api.Services
 {
@@ -13,16 +15,16 @@ namespace Mystore.Api.Services
 
         private readonly UserManager<User> userManager;
         private readonly ITokenGeneratorService jwtTokenGenerator;
-        private readonly IUserRepository UserRepository;
+        private readonly IUserRepository userRepository;
 
         public IdentityService(
             UserManager<User> userManager,
             ITokenGeneratorService jwtTokenGenerator,
-            IUserRepository UserRepository)
+            IUserRepository userRepository)
         {
             this.userManager = userManager;
             this.jwtTokenGenerator = jwtTokenGenerator;
-            this.UserRepository = UserRepository;
+            this.userRepository = userRepository;
         }
 
         public async Task<Result<User>> Register(UserInputModel userInput)
@@ -34,6 +36,11 @@ namespace Mystore.Api.Services
             };
 
             var identityResult = await this.userManager.CreateAsync(user, userInput.Password);
+
+            if (identityResult.Succeeded)
+            {
+                await userRepository.SaveUserDetails(user.Id);
+            }
 
             var errors = identityResult.Errors.Select(e => e.Description);
 

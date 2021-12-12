@@ -34,5 +34,11 @@
 
             await this.Data.SaveChangesAsync();
         }
+
+        public async Task Insert(TEntity entity)
+        {
+            await this.Data.AddAsync(entity);
+            await this.Data.SaveChangesAsync();
+        }
     }
 }

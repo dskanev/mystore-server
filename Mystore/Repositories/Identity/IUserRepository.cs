@@ -9,5 +9,6 @@ namespace Mystore.Api.Services
 {
     public interface IUserRepository : IDataService<User>
     {
+        Task SaveUserDetails(string userId);
     }
 }

@@ -2,6 +2,7 @@
 using Common.Services;
 using Mystore.Api.Data;
 using Mystore.Api.Data.Models;
+using Mystore.Api.Data.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,17 @@ namespace Mystore.Api.Services
         public UserRepository(IdentityDbContext db, IMapper mapper)
         : base(db)
             => this.mapper = mapper;
+
+        public async Task SaveUserDetails(string userId)
+        {
+            var userDetails = new UserDetails
+            {
+                UserId = userId
+            };
+
+            await this.Data.AddAsync(userDetails);
+            await this.Data.SaveChangesAsync();
+        }
     }
 
 

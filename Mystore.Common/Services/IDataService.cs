@@ -14,5 +14,6 @@ namespace Common.Services
     {
         Task MarkMessageAsPublished(long id);
         Task Save(TEntity entity, params Message[] messages);
+        Task Insert(TEntity entity);
     }
 }

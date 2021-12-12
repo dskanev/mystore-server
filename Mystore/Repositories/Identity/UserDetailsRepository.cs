@@ -46,10 +46,29 @@ namespace Mystore.Api.Repositories.Identity
             .FirstOrDefaultAsync();
 
         public async Task<long> GetDetailsIdForUser(string userId)
-        => await this
-            .All()
-            .Where(x => x.UserId == userId)
-            .Select(x => x.Id)
-            .FirstOrDefaultAsync();
+        {
+            var dbResult = await this
+                .All()
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
+            if (dbResult == default)
+            {
+                await this.Insert(new UserDetails                 
+                {
+                    UserId = userId
+                });
+
+                dbResult = await this
+                .All()
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+            }
+
+            return dbResult;
+        }
+        
     }
 }
