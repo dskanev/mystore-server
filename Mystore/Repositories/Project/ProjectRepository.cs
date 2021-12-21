@@ -46,5 +46,24 @@ namespace Mystore.Api.Repositories.Project
 
             return Result<ProjectOutputModel>.SuccessWith(this.mapper.Map<ProjectOutputModel>(dbModel));
         }
+
+        public async Task<Result<ProjectOutputModel>> Edit(ProjectInputModel input)
+        {
+            var dbProject = await this.Data
+                .Set<Mystore.Api.Data.Models.Project.Project>()
+                .Where(x => x.Id == input.Id)
+                .FirstOrDefaultAsync();
+
+            dbProject.Description = input.Description;
+            dbProject.Deadline = input.Deadline;
+            dbProject.CityId = input.CityId;
+            dbProject.Measurement = input.Measurement;
+            dbProject.UnitOfMeasurementId = input.UnitOfMeasurementId;
+            dbProject.Name = input.Name;
+
+            await this.Data.SaveChangesAsync();
+
+            return Result<ProjectOutputModel>.SuccessWith(this.mapper.Map<ProjectOutputModel>(dbProject));
+        }
     }
 }

@@ -90,6 +90,20 @@ namespace Mystore.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(UpdateProject))]
+        public async Task<ActionResult> UpdateProject(ProjectInputModel input)
+        {
+            input.AuthorId = await userDetailsRepository.GetDetailsIdForUser(currentUser.UserId);
+            var result = await projectRepository.Edit(input);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [Route(nameof(GetImageById))]

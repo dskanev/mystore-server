@@ -11,5 +11,6 @@ namespace Mystore.Api.Repositories.Project
         Task<IList<ProjectOutputModel>> GetUserProjects(string userId);
         Task<ProjectOutputModel> GetProject(long id);
         Task<Result<ProjectOutputModel>> Create(ProjectInputModel input);
+        Task<Result<ProjectOutputModel>> Edit(ProjectInputModel input);
     }
 }
