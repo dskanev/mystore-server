@@ -22,7 +22,7 @@ namespace Mystore.Api.Repositories.Project
         public async Task<IList<ProjectOutputModel>> GetAll()
         =>  await this
             .mapper
-            .ProjectTo<ProjectOutputModel>(this.All())
+            .ProjectTo<ProjectOutputModel>(this.All().Where(x => !x.IsDeleted))
             .ToListAsync();
 
         public async Task<ProjectOutputModel> GetProject(long id)
@@ -30,6 +30,7 @@ namespace Mystore.Api.Repositories.Project
             var result = await this
                 .All()
                 .Where(x => x.Id == id)
+                .Where(x => !x.IsDeleted)
                 .Include(x => x.City)
                 .Include(x => x.UnitOfMeasurement)
                 .FirstOrDefaultAsync();
@@ -48,7 +49,7 @@ namespace Mystore.Api.Repositories.Project
         public async Task<IList<ProjectOutputModel>> GetUserProjects(string userId)
         => await this
             .mapper
-            .ProjectTo<ProjectOutputModel>(this.All().Where(x => x.Author.UserId == userId))
+            .ProjectTo<ProjectOutputModel>(this.All().Where(x => x.Author.UserId == userId).Where(x => !x.IsDeleted))
             .ToListAsync();
 
         public async Task<Result<ProjectOutputModel>> Create(ProjectInputModel input)
@@ -77,6 +78,20 @@ namespace Mystore.Api.Repositories.Project
             await this.Data.SaveChangesAsync();
 
             return Result<ProjectOutputModel>.SuccessWith(this.mapper.Map<ProjectOutputModel>(dbProject));
+        }
+
+        public async Task<Result<long>> Delete(long id)
+        {
+            var dbProject = await this.Data
+                .Set<Mystore.Api.Data.Models.Project.Project>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            dbProject.IsDeleted = true;
+
+            await this.Data.SaveChangesAsync();
+
+            return Result<long>.SuccessWith(dbProject.Id);
         }
     }
 }

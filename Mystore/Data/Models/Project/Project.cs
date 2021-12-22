@@ -23,6 +23,7 @@ namespace Mystore.Api.Data.Models.Project
         public DateTime? Deadline { get; set; }
         public UserDetails Author { get; set; }
         public long AuthorId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 
     public class ProjectInputModel : IMapping

@@ -104,6 +104,19 @@ namespace Mystore.Api.Controllers
             return Ok(result);
         }
 
+        [HttpDelete]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(DeleteProject))]
+        public async Task<ActionResult> DeleteProject(long projectId)
+        { 
+            var result = await projectRepository.Delete(projectId);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [Route(nameof(GetImageById))]
