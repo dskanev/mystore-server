@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mystore.Api", "Mystore\Mystore.Api.csproj", "{3A16A94D-1B92-4336-A8E1-97EF439BC6DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystore.Api", "Mystore\Mystore.Api.csproj", "{3A16A94D-1B92-4336-A8E1-97EF439BC6DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mystore.Common", "Mystore.Common\Mystore.Common.csproj", "{A1665456-4D75-4AF6-9DEC-00EC11497F1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mystore.Common", "Mystore.Common\Mystore.Common.csproj", "{A1665456-4D75-4AF6-9DEC-00EC11497F1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EAE8AFB0-1B2D-4941-BD1E-D3AC35FEE698}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
