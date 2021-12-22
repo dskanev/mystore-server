@@ -21,6 +21,7 @@ namespace Mystore.Api.Controllers
         private readonly IUserDetailsRepository userDetailsRepository;
         private readonly IProjectRepository projectRepository;
         private readonly IImageRepository imageRepository;
+        private readonly ICommentRepository commentRepository;
         private readonly IMapper mapper;
 
         public ProjectController(
@@ -28,12 +29,14 @@ namespace Mystore.Api.Controllers
             IUserDetailsRepository userDetailsRepository,
             IProjectRepository projectRepository,
             IImageRepository imageRepository,
+            ICommentRepository commentRepository,
             IMapper mapper)
         {
             this.currentUser = currentUser;
             this.userDetailsRepository = userDetailsRepository;
             this.projectRepository = projectRepository;
             this.imageRepository = imageRepository;
+            this.commentRepository = commentRepository;
             this.mapper = mapper;
         }
 
@@ -51,7 +54,6 @@ namespace Mystore.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [Route(nameof(All))]
         public async Task<ActionResult> All()
         {
@@ -64,7 +66,6 @@ namespace Mystore.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         [Route(nameof(GetById))]
         public async Task<ActionResult> GetById(long id)
         {
@@ -95,7 +96,6 @@ namespace Mystore.Api.Controllers
         [Route(nameof(UpdateProject))]
         public async Task<ActionResult> UpdateProject(ProjectInputModel input)
         {
-            input.AuthorId = await userDetailsRepository.GetDetailsIdForUser(currentUser.UserId);
             var result = await projectRepository.Edit(input);
             if (!result.Succeeded)
             {
@@ -137,6 +137,32 @@ namespace Mystore.Api.Controllers
         {
             var result = await imageRepository.CreateImage(input);
             if (result == default)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(PostComment))]
+        public async Task<ActionResult> PostComment(CommentInputModel input)
+        {
+            input.UserDetailsId = await userDetailsRepository.GetDetailsIdForUser(currentUser.UserId);
+            var result = await commentRepository.PostComment(input);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route(nameof(GetCommentsForProject))]
+        public async Task<ActionResult> GetCommentsForProject(long projectId)
+        {
+            var result = await commentRepository.GetCommentsForProject(projectId);
+            if(result == default)
             {
                 return BadRequest();
             }

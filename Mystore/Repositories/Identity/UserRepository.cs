@@ -18,11 +18,12 @@ namespace Mystore.Api.Services
         : base(db)
             => this.mapper = mapper;
 
-        public async Task SaveUserDetails(string userId)
+        public async Task SaveUserDetails(string userId, string email)
         {
             var userDetails = new UserDetails
             {
-                UserId = userId
+                UserId = userId,
+                FirstName = email
             };
 
             await this.Data.AddAsync(userDetails);

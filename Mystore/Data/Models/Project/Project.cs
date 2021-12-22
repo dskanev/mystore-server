@@ -51,6 +51,7 @@ namespace Mystore.Api.Data.Models.Project
         public City City { get; set; }
         public int Measurement { get; set; }
         public DateTime? Deadline { get; set; }
+        public string CreatedBy { get; set; }
 
         public void MappingProfile(Profile mapper)
         {

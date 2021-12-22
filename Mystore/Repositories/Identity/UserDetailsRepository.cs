@@ -57,7 +57,9 @@ namespace Mystore.Api.Repositories.Identity
             {
                 await this.Insert(new UserDetails                 
                 {
-                    UserId = userId
+                    UserId = userId,
+                    FirstName = "Placeholder_firstname",
+                    LastName = "Placeholder_lastname"
                 });
 
                 dbResult = await this

@@ -39,7 +39,7 @@ namespace Mystore.Api.Services
 
             if (identityResult.Succeeded)
             {
-                await userRepository.SaveUserDetails(user.Id);
+                await userRepository.SaveUserDetails(user.Id, userInput.Email);
             }
 
             var errors = identityResult.Errors.Select(e => e.Description);
@@ -67,7 +67,7 @@ namespace Mystore.Api.Services
 
             var token = this.jwtTokenGenerator.GenerateToken(user, roles);
 
-            return new UserOutputModel(token);
+            return new UserOutputModel(token, user.Id);
         }
 
         public async Task<Result> ChangePassword(

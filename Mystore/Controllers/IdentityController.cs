@@ -55,7 +55,7 @@ namespace Mystore.Api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return new UserOutputModel(result.Data.Token);
+            return new UserOutputModel(result.Data.Token, result.Data.UserId);
         }
 
         [HttpPut]
