@@ -23,6 +23,9 @@ namespace Mystore.Api.Data.Configurations
 
             builder
                 .HasOne(x => x.City);
+
+            builder
+                .HasMany(x => x.Applicants);
         }
     }
 }

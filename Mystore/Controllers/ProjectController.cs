@@ -181,5 +181,32 @@ namespace Mystore.Api.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(ApplyForProject))]
+        public async Task<ActionResult> ApplyForProject(long projectId)
+        {
+            var userId = currentUser.UserId;
+            var result = await projectRepository.AssignApplicantToProject(projectId, userId);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors.FirstOrDefault());
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Route(nameof(GetProjectApplicants))]
+        public async Task<ActionResult> GetProjectApplicants(long projectId)
+        {
+            var result = await projectRepository.GetProjectApplicants(projectId);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }    
+            return Ok(result);
+        }
     }
 }

@@ -93,5 +93,40 @@ namespace Mystore.Api.Repositories.Project
 
             return Result<long>.SuccessWith(dbProject.Id);
         }
+
+        public async Task<Result> AssignApplicantToProject(long projectId, string userId)
+        {
+            var project = await this.All()
+                .Where(x => x.Id == projectId)
+                .Include(x => x.Applicants)
+                .FirstOrDefaultAsync();
+
+            var user = await this.Data
+                .Set<User>()
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+
+            if (project == default || user == default)
+            {
+                return Result.Failure("Not found.");
+            }
+
+            project.Applicants.Add(user);
+
+            await this.Data.SaveChangesAsync();
+
+            return Result.Success;
+        }
+
+        public async Task<Result<IList<User>>> GetProjectApplicants(long projectId)
+        {
+            var result = await this.All()
+                .Where(x => x.Id == projectId)
+                .Include(x => x.Applicants)
+                .Select(x => x.Applicants.ToList())
+                .FirstOrDefaultAsync();
+
+            return Result<IList<User>>.SuccessWith(result);
+        }
     }
 }

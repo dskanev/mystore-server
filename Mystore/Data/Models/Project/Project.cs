@@ -23,6 +23,7 @@ namespace Mystore.Api.Data.Models.Project
         public User Author { get; set; }
         public string AuthorId { get; set; }
         public bool IsDeleted { get; set; }
+        public IList<User> Applicants { get; set; }
     }
 
     public class ProjectInputModel : IMapping
