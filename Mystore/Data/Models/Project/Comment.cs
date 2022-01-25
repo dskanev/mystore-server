@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Common.Data.Mappings;
 using Common.Data.Models;
-using Mystore.Api.Data.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +11,8 @@ namespace Mystore.Api.Data.Models.Project
     public class Comment : DatabaseModel
     {
         public string Text { get; set; }
+        public User User { get; set; }
         public string UserId { get; set; }
-        public UserDetails UserDetails { get; set; }
         public long UserDetailsId { get; set; }
         public long ProjectId { get; set; }
     }
@@ -22,7 +21,7 @@ namespace Mystore.Api.Data.Models.Project
     {
         public long ProjectId { get; set; }
         public string Text { get; set; }
-        public long UserDetailsId { get; set; }
+        public string AuthorId { get; set; }
 
         public void MappingProfile(Profile mapper)
         {
@@ -34,12 +33,13 @@ namespace Mystore.Api.Data.Models.Project
     {
         public long Id { get; set; }
         public string Text { get; set; }
-        public UserDetails UserDetails { get; set; }
+        public UserDetailsOutputModel UserDetails { get; set; }
         public long ProjectId { get; set; }
 
         public void MappingProfile(Profile mapper)
         {
             mapper.CreateMap<Comment, CommentOutputModel>();
+            mapper.CreateMap<User, UserDetailsOutputModel>();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Mystore.Api.Data.Models.Identity;
+using Mystore.Api.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Mystore.Api.Infrastructure
     {
         public MappingProfile()
         {
-            CreateMap<UserDetailsInputModel, UserDetails>();
+            CreateMap<UserDetailsInputModel, User>();
         }
     }
 }

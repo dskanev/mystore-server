@@ -2,7 +2,7 @@
 using Common.Services;
 using Microsoft.EntityFrameworkCore;
 using Mystore.Api.Data;
-using Mystore.Api.Data.Models.Identity;
+using Mystore.Api.Data.Models;
 using Mystore.Api.Data.Models.Project;
 using System;
 using System.Collections.Generic;
@@ -35,9 +35,9 @@ namespace Mystore.Api.Repositories.Project
                 .Include(x => x.UnitOfMeasurement)
                 .FirstOrDefaultAsync();
 
-            var userId = await this.Data.Set<UserDetails>()
+            var userId = await this.Data.Set<User>()
                 .Where(x => x.Id == result.AuthorId)
-                .Select(x => x.UserId)
+                .Select(x => x.Id)
                 .FirstOrDefaultAsync();
 
             var output = mapper.Map<ProjectOutputModel>(result);
@@ -49,7 +49,7 @@ namespace Mystore.Api.Repositories.Project
         public async Task<IList<ProjectOutputModel>> GetUserProjects(string userId)
         => await this
             .mapper
-            .ProjectTo<ProjectOutputModel>(this.All().Where(x => x.Author.UserId == userId).Where(x => !x.IsDeleted))
+            .ProjectTo<ProjectOutputModel>(this.All().Where(x => x.Author.Id == userId).Where(x => !x.IsDeleted))
             .ToListAsync();
 
         public async Task<Result<ProjectOutputModel>> Create(ProjectInputModel input)

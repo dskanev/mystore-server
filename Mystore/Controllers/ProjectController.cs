@@ -82,7 +82,7 @@ namespace Mystore.Api.Controllers
         [Route(nameof(CreateProject))]
         public async Task<ActionResult> CreateProject(ProjectInputModel input)
         {
-            input.AuthorId = await userDetailsRepository.GetDetailsIdForUser(currentUser.UserId);
+            input.AuthorId = currentUser.UserId;
             var result = await projectRepository.Create(input);
             if (!result.Succeeded)
             {
@@ -161,7 +161,7 @@ namespace Mystore.Api.Controllers
         [Route(nameof(PostComment))]
         public async Task<ActionResult> PostComment(CommentInputModel input)
         {
-            input.UserDetailsId = await userDetailsRepository.GetDetailsIdForUser(currentUser.UserId);
+            input.AuthorId = currentUser.UserId;
             var result = await commentRepository.PostComment(input);
             if (!result.Succeeded)
             {

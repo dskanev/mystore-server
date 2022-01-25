@@ -24,7 +24,7 @@ namespace Mystore.Api.Repositories.Project
                 .mapper
                 .ProjectTo<CommentOutputModel>(this.All()
                 .Where(x => x.ProjectId == projectId)
-                .Include(x => x.UserDetails))
+                .Include(x => x.User))
                 .ToListAsync();
         }
 

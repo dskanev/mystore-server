@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Common.Services;
+using Microsoft.EntityFrameworkCore;
 using Mystore.Api.Data;
 using Mystore.Api.Data.Models;
-using Mystore.Api.Data.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +20,12 @@ namespace Mystore.Api.Services
 
         public async Task SaveUserDetails(string userId, string email)
         {
-            var userDetails = new UserDetails
-            {
-                UserId = userId,
-                FirstName = email
-            };
+            var dbUser = await this.All()
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
 
-            await this.Data.AddAsync(userDetails);
+            dbUser.Email = email;
+
             await this.Data.SaveChangesAsync();
         }
     }

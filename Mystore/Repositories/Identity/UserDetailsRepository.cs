@@ -1,24 +1,27 @@
 ﻿using AutoMapper;
 using Common.Services;
+using Common.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 using Mystore.Api.Data;
-using Mystore.Api.Data.Models.Identity;
+using Mystore.Api.Data.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mystore.Api.Repositories.Identity
 {
-    public class UserDetailsRepository : DataService<UserDetails>, IUserDetailsRepository
+    public class UserDetailsRepository : DataService<User>, IUserDetailsRepository
     {
         private readonly IMapper mapper;
 
         public UserDetailsRepository(IdentityDbContext db, IMapper mapper)
         : base(db)
-            => this.mapper = mapper;
-
-        public async Task<Result<UserDetails>> SaveUserDetails(UserDetails userDetails)
         {
-            var existingDetails = await GetByUserId(userDetails.UserId);
+            this.mapper = mapper;
+        }
+
+        public async Task<Result<User>> SaveUserDetails(UserDetailsInputModel userDetails)
+        {
+            var existingDetails = await GetByUserId(userDetails.Id);
 
             if (existingDetails != default)
             {
@@ -28,49 +31,16 @@ namespace Mystore.Api.Repositories.Identity
                 existingDetails.PhoneNumber = userDetails.PhoneNumber ?? existingDetails.PhoneNumber;
 
                 await this.Data.SaveChangesAsync();
-                return Result<UserDetails>.SuccessWith(existingDetails);
+                return Result<User>.SuccessWith(existingDetails);
             }
-            else
-            {
-                await this.Data.AddAsync(userDetails);
-                await this.Data.SaveChangesAsync();
-                return Result<UserDetails>.SuccessWith(userDetails);
-            }
+            return Result<User>.Failure("Bad Request.");
         }
 
-        public async Task<UserDetails> GetByUserId(string userId)
+        public async Task<User> GetByUserId(string userId)
         =>  await this
             .All()
-            .Where(x => x.UserId == userId)
+            .Where(x => x.Id == userId)
             .Include(x => x.City)
-            .FirstOrDefaultAsync();
-
-        public async Task<long> GetDetailsIdForUser(string userId)
-        {
-            var dbResult = await this
-                .All()
-                .Where(x => x.UserId == userId)
-                .Select(x => x.Id)
-                .FirstOrDefaultAsync();
-
-            if (dbResult == default)
-            {
-                await this.Insert(new UserDetails                 
-                {
-                    UserId = userId,
-                    FirstName = "Placeholder_firstname",
-                    LastName = "Placeholder_lastname"
-                });
-
-                dbResult = await this
-                .All()
-                .Where(x => x.UserId == userId)
-                .Select(x => x.Id)
-                .FirstOrDefaultAsync();
-            }
-
-            return dbResult;
-        }
-        
+            .FirstOrDefaultAsync();        
     }
 }

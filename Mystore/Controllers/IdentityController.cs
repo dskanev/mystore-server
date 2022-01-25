@@ -5,9 +5,9 @@ using Mystore.Api.Models;
 using Mystore.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Mystore.Api.Data.Models.Identity;
 using Mystore.Api.Repositories.Identity;
 using AutoMapper;
+using Mystore.Api.Data.Models;
 
 namespace Mystore.Api.Controllers
 {
@@ -73,10 +73,9 @@ namespace Mystore.Api.Controllers
         [Route(nameof(SaveUserDetails))]
         public async Task<ActionResult> SaveUserDetails(UserDetailsInputModel userDetails)
         {
-            var dbModel = mapper.Map<UserDetails>(userDetails);
-            dbModel.UserId = currentUser.UserId;
+            userDetails.Id = currentUser.UserId;
 
-            var result = await userDetailsRepository.SaveUserDetails(dbModel);
+            var result = await userDetailsRepository.SaveUserDetails(userDetails);
 
             if (!result.Succeeded)
             {

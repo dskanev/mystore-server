@@ -4,7 +4,6 @@ using Mystore.Api.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
-using Mystore.Api.Data.Models.Identity;
 using Common.Extensions;
 
 namespace Mystore.Api.Services

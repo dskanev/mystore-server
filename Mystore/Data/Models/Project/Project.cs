@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Common.Data.Mappings;
 using Common.Data.Models;
-using Mystore.Api.Data.Models.Identity;
 using Mystore.Api.Data.Models.Nomenclature;
 using System;
 using System.Collections.Generic;
@@ -21,8 +20,8 @@ namespace Mystore.Api.Data.Models.Project
         public int Measurement { get; set; }
         public IList<ImageMapping> Images { get; set; }
         public DateTime? Deadline { get; set; }
-        public UserDetails Author { get; set; }
-        public long AuthorId { get; set; }
+        public User Author { get; set; }
+        public string AuthorId { get; set; }
         public bool IsDeleted { get; set; }
     }
 
@@ -35,7 +34,7 @@ namespace Mystore.Api.Data.Models.Project
         public long CityId { get; set; }
         public int Measurement { get; set; }
         public DateTime? Deadline { get; set; }
-        public long AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         public void MappingProfile(Profile mapper)
         {
